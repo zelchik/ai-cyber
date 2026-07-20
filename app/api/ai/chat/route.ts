@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import OpenAI from "openai"
+import { cookies } from "next/headers";
 
 
 const openai = new OpenAI({
@@ -13,6 +14,17 @@ export async function POST(req: NextRequest) {
   try {
 
     const { message, history = [] } = await req.json()
+
+    const cookieStore = await cookies();
+
+const userId = cookieStore.get("ai_planner_token")?.value;
+
+if (!userId) {
+  return NextResponse.json(
+    { error: "Unauthorized" },
+    { status: 401 }
+  );
+}
 
 
     // 1. AI визначає дію
@@ -97,7 +109,7 @@ export async function POST(req: NextRequest) {
         data:{
           title: action.title,
           completed:false,
-          userId:"demo-user"
+          userId,
         }
 
       })
@@ -119,7 +131,7 @@ if (action.type === "habit") {
     data: {
       title: action.title,
       completed: false,
-      userId: "demo-user",
+      userId,
     },
   })
 
@@ -139,7 +151,7 @@ if (action.type === "habit") {
 
         data:{
           content: action.title,
-          userId:"demo-user"
+          userId,
         }
 
       })
