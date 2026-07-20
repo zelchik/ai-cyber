@@ -63,23 +63,32 @@ export default function LoginPage() {
 
   return (
     <div className="fade-in" style={{ width: '100%', maxWidth: '400px' }}>
-      {/* Logo */}
-      <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-        <div style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '28px',
-          fontWeight: 700,
-          color: 'var(--accent)',
-          textShadow: '0 0 20px var(--accent-glow)',
-          letterSpacing: '0.1em',
-          marginBottom: '8px',
-        }}>
-          [ AI PLANNER ]
-        </div>
-        <p style={{ color: 'var(--text-muted)', fontSize: '13px', fontFamily: 'var(--font-mono)', letterSpacing: '0.06em' }}>
-          //: YOUR PERSONAL AI ASSISTANT
-        </p>
-      </div>
+     {/* Logo */}
+<div style={{ textAlign: 'center', marginBottom: '48px' }}>
+  <div style={{ marginBottom: '8px' }}>
+<img
+  src="/logo.svg"
+  alt="AI Planner"
+  style={{
+    display: 'block',
+    width: '220px',
+    height: 'auto',
+    margin: '0 auto',
+  }}
+/>
+  </div>
+
+  <p
+    style={{
+      color: 'var(--text-muted)',
+      fontSize: '13px',
+      fontFamily: 'var(--font-mono)',
+      letterSpacing: '0.06em',
+    }}
+  >
+    //: ТВОЄ ПЕРСОНАЛЬНЕ AI-ПЛАНУВАННЯ
+  </p>
+</div>
 
       {/* Card */}
       <div className="glass" style={{ borderRadius: 'var(--radius-xl)', padding: '32px' }}>
@@ -95,7 +104,7 @@ export default function LoginPage() {
                 textTransform: 'uppercase',
                 marginBottom: '8px',
               }}>
-                //: EMAIL ADDRESS
+                //: Електронна пошта
               </label>
               <input
                 className={`input-cyber ${shake ? 'shake' : ''}`}
@@ -114,7 +123,7 @@ export default function LoginPage() {
             )}
 
             <button type="submit" className="btn-accent" style={{ width: '100%' }}>
-              NEXT →
+              Далі →
             </button>
           </form>
         ) : (
@@ -143,7 +152,7 @@ export default function LoginPage() {
                   fontFamily: 'var(--font-mono)',
                 }}
               >
-                CHANGE
+                Змінити
               </button>
             </div>
 
@@ -157,7 +166,7 @@ export default function LoginPage() {
                 textTransform: 'uppercase',
                 marginBottom: '8px',
               }}>
-                //: PASSWORD
+                //: Пароль
               </label>
               <input
                 className={`input-cyber ${shake ? 'shake' : ''}`}
@@ -176,17 +185,17 @@ export default function LoginPage() {
             )}
 
             <button type="submit" className="btn-accent" style={{ width: '100%' }} disabled={loading}>
-              {loading ? 'LOADING...' : '[ LOG IN ]'}
+              {loading ? 'Завантаження...' : '[ Увійти ]'}
             </button>
           </form>
         )}
 
         <div style={{ textAlign: 'center', marginTop: '24px' }}>
           <span style={{ color: 'var(--text-muted)', fontSize: '13px' }}>
-            No account?{' '}
+            Ще немає акаунта?{' '}
           </span>
           <Link href="/register" style={{ color: 'var(--accent)', fontSize: '13px', fontFamily: 'var(--font-mono)' }}>
-            [ SIGN UP ]
+            [ ЗАРЕЄСТРУВАТИСЯ ]
           </Link>
         </div>
       </div>

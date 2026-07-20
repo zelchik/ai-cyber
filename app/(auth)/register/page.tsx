@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from "next/image";
 
 function PasswordRule({ met, text }: { met: boolean; text: string }) {
   return (
@@ -43,11 +44,11 @@ export default function RegisterPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!rules.length || !rules.upper || !rules.special) {
-      setError('Password does not meet requirements')
+      setError('Пароль не відповідає вимогам')
       return
     }
     if (form.password !== form.confirmPassword) {
-      setError('Passwords do not match')
+      setError('Паролі не збігаються')
       return
     }
 
@@ -63,14 +64,14 @@ export default function RegisterPage() {
       const data = await res.json()
 
       if (!res.ok) {
-        setError(data.error?.message || 'Registration failed')
+        setError(data.error?.message || 'Не вдалося створити акаунт')
         setLoading(false)
         return
       }
 
       router.push('/')
     } catch {
-      setError('Network error. Try again.')
+      setError('Помилка мережі. Спробуйте ще раз.')
       setLoading(false)
     }
   }
@@ -101,66 +102,74 @@ export default function RegisterPage() {
   return (
     <div className="fade-in" style={{ width: '100%', maxWidth: '420px' }}>
       <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-        <div style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '24px',
-          fontWeight: 700,
-          color: 'var(--accent)',
-          textShadow: '0 0 20px var(--accent-glow)',
-          letterSpacing: '0.1em',
-          marginBottom: '8px',
-        }}>
-          [ AI PLANNER ]
-        </div>
-        <p style={{ color: 'var(--text-muted)', fontSize: '13px', fontFamily: 'var(--font-mono)' }}>
-          //: CREATE ACCOUNT
-        </p>
-      </div>
+  <div style={{ marginBottom: '8px' }}>
+    <img
+      src="/logo.svg"
+      alt="AI Planner"
+      style={{
+        display: 'block',
+        width: '220px',
+        height: 'auto',
+        margin: '0 auto',
+      }}
+    />
+  </div>
+
+  <p
+    style={{
+      color: 'var(--text-muted)',
+      fontSize: '13px',
+      fontFamily: 'var(--font-mono)',
+    }}
+  >
+    //: СТВОРЕННЯ ОБЛІКОВОГО ЗАПИСУ
+  </p>
+</div>
 
       <div className="glass" style={{ borderRadius: 'var(--radius-xl)', padding: '28px' }}>
         <form onSubmit={handleSubmit}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
             <div style={{ marginBottom: '16px' }}>
               <label style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.08em', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '6px' }}>
-                //: FIRST NAME
+                //: ІМ'Я
               </label>
-              <input className="input-cyber" type="text" placeholder="John" value={form.firstName} onChange={(e) => update('firstName', e.target.value)} required />
+              <input className="input-cyber" type="text" placeholder="Ім'я" value={form.firstName} onChange={(e) => update('firstName', e.target.value)} required />
             </div>
             <div style={{ marginBottom: '16px' }}>
               <label style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.08em', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '6px' }}>
-                //: LAST NAME
+                //: ПРІЗВИЩЕ
               </label>
-              <input className="input-cyber" type="text" placeholder="Doe" value={form.lastName} onChange={(e) => update('lastName', e.target.value)} required />
+              <input className="input-cyber" type="text" placeholder="Прізвище" value={form.lastName} onChange={(e) => update('lastName', e.target.value)} required />
             </div>
           </div>
 
-          {field('NICKNAME', 'nickname', 'text', '@johndoe')}
-          {field('EMAIL', 'email', 'email', 'you@example.com')}
-          {field('PASSWORD', 'password', 'password', '••••••••')}
+          {field('НІКНЕЙМ', 'nickname', 'text', '@nickname')}
+          {field('Е-ПОШТА', 'email', 'email', 'Введіть email')}
+          {field('ПАРОЛЬ', 'password', 'password', '••••••••')}
 
           {form.password.length > 0 && (
             <div style={{ marginBottom: '16px', padding: '12px', background: 'var(--bg-elevated)', borderRadius: 'var(--radius-sm)' }}>
-              <PasswordRule met={rules.length}  text="8+ characters" />
-              <PasswordRule met={rules.upper}   text="1 uppercase letter (A-Z)" />
-              <PasswordRule met={rules.special} text="1 special character (!@#$%^&*)" />
+              <PasswordRule met={rules.length} text="Щонайменше 8 символів" />
+              <PasswordRule met={rules.upper} text="1 велика літера (A-Z)" />
+              <PasswordRule met={rules.special} text="1 спеціальний символ (!@#$%^&*)" />
             </div>
           )}
 
-          {field('CONFIRM PASSWORD', 'confirmPassword', 'password', '••••••••')}
+          {field('ПІДТВЕРДІТЬ ПАРОЛЬ', 'confirmPassword', 'password', '••••••••')}
 
           {error && (
             <p style={{ color: 'var(--state-error)', fontSize: '13px', marginBottom: '16px' }}>{error}</p>
           )}
 
           <button type="submit" className="btn-accent" style={{ width: '100%' }} disabled={loading}>
-            {loading ? 'CREATING...' : '[ CREATE ACCOUNT ]'}
+            {loading ? 'СТВОРЕННЯ...' : '[ ЗАРЕЄСТРУВАТИСЯ ]'}
           </button>
         </form>
 
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          <span style={{ color: 'var(--text-muted)', fontSize: '13px' }}>Have account? </span>
+          <span style={{ color: 'var(--text-muted)', fontSize: '13px' }}>Вже маєте акаунт? </span>
           <Link href="/login" style={{ color: 'var(--accent)', fontSize: '13px', fontFamily: 'var(--font-mono)' }}>
-            [ LOG IN ]
+            [ УВІЙТИ ]
           </Link>
         </div>
       </div>
